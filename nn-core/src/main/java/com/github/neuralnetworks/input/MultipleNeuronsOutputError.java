@@ -76,7 +76,13 @@ public class MultipleNeuronsOutputError implements OutputError {
 	return getTotalInputSize() > 0 ? ((float) getTotalErrorSamples()) / getTotalInputSize() : 0;
     }
 
-    @Override
+	//TODO count square network error
+	@Override
+	public float getTotalSquareNetworkError() {
+		return 0;
+	}
+
+	@Override
     public int getTotalErrorSamples() {
 	if (outputToTarget == null) {
 	    outputToTarget = outputToTarget();

@@ -9,8 +9,14 @@ import com.github.neuralnetworks.tensor.Tensor;
  */
 public interface OutputError extends Serializable {
     public void addItem(Tensor networkOutput, Tensor targetOutput);
+
     public float getTotalNetworkError();
+
+    public float getTotalSquareNetworkError();
+
     public int getTotalErrorSamples();
+
     public int getTotalInputSize();
+
     public void reset();
 }
