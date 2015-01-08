@@ -98,7 +98,7 @@ public abstract class Trainer<N extends NeuralNetwork> implements Serializable {
         TrainingInputProvider ip = getTestingInputProvider();
         N n = getNeuralNetwork();
 
-        float[][] testResult = new float[ip.getInputSize()][2];
+        float[][] testResult = null;
         if (ip != null && n != null && n.getLayerCalculator() != null) {
             ip.reset();
 
@@ -114,15 +114,17 @@ public abstract class Trainer<N extends NeuralNetwork> implements Serializable {
             }
 
             TrainingInputData input = new TrainingInputDataImpl(results.get(n.getInputLayer()), results.get(oe));
+            int size = results.get(n.getOutputLayer()).getSize();
+            testResult = new float[ip.getInputSize()][size];
             for (int i = 0; i < ip.getInputSize(); i += getTestBatchSize()) {
                 ip.populateNext(input);
                 calculatedLayers.clear();
                 calculatedLayers.add(n.getInputLayer());
                 n.getLayerCalculator().calculate(n, n.getOutputLayer(), calculatedLayers, results);
 
-                System.out.println(results.get(n.getOutputLayer()).get(0) + " " + results.get(n.getOutputLayer()).get(1));
-                testResult[i][0] = results.get(n.getOutputLayer()).get(0);
-                testResult[i][1] = results.get(n.getOutputLayer()).get(1);
+                for (int j = 0; j < size; j++) {
+                    testResult[i][j] = results.get(n.getOutputLayer()).get(j);
+                }
                 if (oe != null) {
                     oe.addItem(results.get(n.getOutputLayer()), input.getTarget());
                 }

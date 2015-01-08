@@ -47,7 +47,9 @@ public class AparapiCDTrainer extends CDTrainerBase {
 	if (weightUpdatesKernel == null || weightUpdatesKernel.getMiniBatchSize() != mbs) {
 	    weightUpdatesKernel = new CDWeightUpdatesKernel(lc.getPositivePhaseVisible(), lc.getPositivePhaseHidden(), lc.getNegativePhaseVisible(), lc.getNegativePhaseHidden(), rbm.getMainConnections().getWeights(), getLearningRate(), getMomentum(), getl1weightDecay(), getl2weightDecay());
 	}
+    //TODO check if this variant is faster
 	Environment.getInstance().getExecutionStrategy().execute(weightUpdatesKernel, rbm.getMainConnections().getWeights().getRows());
+//		weightUpdatesKernel.run();
 
 	// update visible bias
 	if (rbm.getVisibleBiasConnections() != null) {
@@ -56,6 +58,7 @@ public class AparapiCDTrainer extends CDTrainerBase {
 	    }
 
 	    Environment.getInstance().getExecutionStrategy().execute(visibleBiasUpdatesKernel, rbm.getVisibleBiasConnections().getWeights().getSize());
+//		visibleBiasUpdatesKernel.run();
 	}
 
 	// update hidden bias

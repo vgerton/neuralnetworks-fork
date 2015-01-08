@@ -39,15 +39,15 @@ public class DbnCircle {
         dbn.setLayerCalculator(NNFactory.lcSigmoid(dbn, null));
 
         fillData();
-        printData();
+//        printData();
 
         // create training and testing input providers
         SimpleInputProvider inputProvider = new SimpleInputProvider(inputData, outputData);
 
         // rbm trainers for each layer
-        AparapiCDTrainer firstTrainer = TrainerFactory.cdSigmoidTrainer(dbn.getNeuralNetwork(0), null, null, null, new NNRandomInitializer(new MersenneTwisterRandomInitializer(-0.01f, 0.01f)), 0.1f, 0.5f, 0f, 0f, 1, 1, 100, true);
-        AparapiCDTrainer secondTrainer = TrainerFactory.cdSigmoidTrainer(dbn.getNeuralNetwork(1), null, null, null, new NNRandomInitializer(new MersenneTwisterRandomInitializer(-0.01f, 0.01f)), 0.1f, 0.5f, 0f, 0f, 1, 1, 100, true);
-        AparapiCDTrainer thirdTrainer = TrainerFactory.cdSigmoidTrainer(dbn.getNeuralNetwork(2), null, null, null, new NNRandomInitializer(new MersenneTwisterRandomInitializer(-0.01f, 0.01f)), 0.1f, 0.5f, 0f, 0f, 1, 1, 100, true);
+        AparapiCDTrainer firstTrainer = TrainerFactory.cdSigmoidTrainer(dbn.getNeuralNetwork(0), null, null, null, new NNRandomInitializer(new MersenneTwisterRandomInitializer(-0.01f, 0.01f)), 0.1f, 0.5f, 0f, 0f, 1, 1, 100, false);
+        AparapiCDTrainer secondTrainer = TrainerFactory.cdSigmoidTrainer(dbn.getNeuralNetwork(1), null, null, null, new NNRandomInitializer(new MersenneTwisterRandomInitializer(-0.01f, 0.01f)), 0.1f, 0.5f, 0f, 0f, 1, 1, 100, false);
+        AparapiCDTrainer thirdTrainer = TrainerFactory.cdSigmoidTrainer(dbn.getNeuralNetwork(2), null, null, null, new NNRandomInitializer(new MersenneTwisterRandomInitializer(-0.01f, 0.01f)), 0.1f, 0.5f, 0f, 0f, 1, 1, 100, false);
 
         Map<NeuralNetwork, OneStepTrainer<?>> map = new HashMap<>();
         map.put(dbn.getNeuralNetwork(0), firstTrainer);
